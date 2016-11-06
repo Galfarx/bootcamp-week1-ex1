@@ -1,0 +1,15 @@
+{
+  "name": "basic_template",
+  "version": "1.0.0",
+  "description": "Basic template for working in Front-end Bootcamp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dominik Kubis",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "^4.0.0-alpha.5",
+    "jquery": "^3.1.1"
+  }
+}
