@@ -15,7 +15,11 @@ var scriptsDist = 'dist/scripts/';
 
 gulp.task('styles', function() {
     var bootstrapStream;
+    var tetherStream;
     var customStyleStream;
+
+    tetherStream = sass(modules + 'tether/src/css/tether.scss')
+        .pipe(autoprefixer('last 2 version'));
 
     bootstrapStream = sass(modules + 'bootstrap/scss/bootstrap.scss')
         .pipe(autoprefixer('last 2 version'));
@@ -23,7 +27,7 @@ gulp.task('styles', function() {
     customStyleStream = sass(stylesSrc + 'main.scss')
         .pipe(autoprefixer('last 2 version'));
 
-    return merge(bootstrapStream, customStyleStream)
+    return merge(bootstrapStream, tetherStream, customStyleStream)
         .pipe(concat('style.css'))
         .pipe(gulp.dest(stylesDist))
         .pipe(notify({ message: 'Styles task complete' }));
@@ -32,6 +36,7 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
     return gulp.src([
         modules + 'jquery/dist/jquery.js',
+        modules + 'tether/dist/js/tether.js',
         modules + 'bootstrap/dist/js/bootstrap.js',
         scriptsSrc + '**/*.js'
     ])
