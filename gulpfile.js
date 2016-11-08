@@ -11,11 +11,13 @@ var modules = 'node_modules/';
 var stylesSrc = 'src/styles/';
 var scriptsSrc = 'src/scripts/';
 var stylesDist = 'dist/styles/';
+var fontsDist = 'dist/fonts/';
 var scriptsDist = 'dist/scripts/';
 
 gulp.task('styles', function() {
     var bootstrapStream;
     var tetherStream;
+    var fontAwesomeStream;
     var customStyleStream;
 
     tetherStream = sass(modules + 'tether/src/css/tether.scss')
@@ -24,13 +26,20 @@ gulp.task('styles', function() {
     bootstrapStream = sass(modules + 'bootstrap/scss/bootstrap.scss')
         .pipe(autoprefixer('last 2 version'));
 
+    fontAwesomeStream = gulp.src(modules + 'font-awesome/css/font-awesome.css');
+
     customStyleStream = sass(stylesSrc + 'main.scss')
         .pipe(autoprefixer('last 2 version'));
 
-    return merge(bootstrapStream, tetherStream, customStyleStream)
+    return merge(bootstrapStream, tetherStream, fontAwesomeStream,customStyleStream)
         .pipe(concat('style.css'))
         .pipe(gulp.dest(stylesDist))
         .pipe(notify({ message: 'Styles task complete' }));
+});
+
+gulp.task('fonts', function() {
+    return gulp.src(modules + 'font-awesome/fonts/*')
+        .pipe(gulp.dest(fontsDist))
 });
 
 gulp.task('scripts', function() {
@@ -46,11 +55,11 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('clean', function() {
-    return del([stylesDist + '*.css', scriptsDist + '*.js']);
+    return del([stylesDist + '*', scriptsDist + '*', fontsDist + '*', '!dist/**/.gitignore']);
 });
 
 gulp.task('default', ['clean'], function() {
-    gulp.start('styles', 'scripts');
+    gulp.start('styles', 'fonts','scripts');
 });
 
 gulp.task('watch', function() {
