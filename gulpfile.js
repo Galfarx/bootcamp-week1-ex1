@@ -47,6 +47,8 @@ gulp.task('scripts', function() {
         modules + 'jquery/dist/jquery.js',
         modules + 'tether/dist/js/tether.js',
         modules + 'bootstrap/dist/js/bootstrap.js',
+        modules + 'handlebars/dist/handlebars.js',
+        modules + 'lodash/lodash.js',
         scriptsSrc + '**/*.js'
     ])
         .pipe(concat('script.js'))
